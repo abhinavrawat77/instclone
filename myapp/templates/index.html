@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+<style>
+    body {
+        text-align: center;
+        background: url("http://www.adweek.com/wp-content/uploads/sites/2/2016/05/InstagramNewLogo640.jpg");}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+{
+    height: 100%;
+}
+.bg {
+    /* The image used */
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/3/36/Hopetoun_falls.jpg");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+}
+/* Set a style for all buttons */
+button {
+    margin: 20px 80px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+}
+ img {
+     float: right;
+     width: 30%;
+     height: 40%;
+}
+a {
+            font-size: 18px;
+            color: red;
+        }
+/* Float cancel and signup buttons and add an equal width */
+.signupbtn {
+    float: bottom;
+    width: 10%;
+}
+.cancelbtn {
+    float: bottom;
+    width: 10%;
+}
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 200px) {
+     .signupbtn {
+       width: 50%;
+    }
+}
+</style>
+
+<script>
+function ValidateContactForm()
+{
+    var Username = document.ContactForm.username;
+    var Name = document.ContactForm.name;
+    var Email = document.ContactForm.email;
+    var Password = document.ContactForm.password;
+    if (Name.value == "")
+    {
+        window.alert("Please enter your name.");
+        name.focus();
+        return false;
+    }
+    if (Email.value == "")
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+    if (Email.value.indexOf("@", 0) < 0)
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+    if (Email.value.indexOf(".", 0) < 0)
+    {
+        window.alert("Please enter a valid e-mail address.");
+        email.focus();
+        return false;
+    }
+     if (Username.value == "")
+    {
+        window.alert("Please enter your username.");
+        name.focus();
+        return false;
+    }
+     if ( Password.value=="")
+    {
+        window.alert("Please enter a password");
+        name.focus();
+        return false;
+    }
+}
+</script>
+</head>
+
+<body>
+    <header>
+       <title>Instaclone SignUp</title>
+        <div class="main">
+            <h1>InstaClone Sign Up</h1>
+            <h4>{{ today }}</h4>
+        </div>
+    </header>
+<img src="http://i.imgur.com/tNgrRg5l.png">
+
+<form method="post">
+
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="username"><b>Username:</b></label>
+      <input id="username" class="form-control"  type="text" name="username" size="46"  placeholder="Enter your Username" required value={{ username }}>
+            <br>
+            <br>
+  </div>
+
+             <label for="name"><b>Full Name:</b></label>
+      <input id="name" class="form-control" type="text" name="name" size="50"  placeholder="Enter your name" required value={{ name }}>
+                 <br>
+                <br>
+    </div>
+
+               <label for="email"><b>E-mail id:</b> </label>
+                <input id="email" class="form-control" type="text" name="email" size="50" placeholder="Enter your Email" required value={{ email }}>
+
+                <br>
+                <br>
+</div>
+
+      <label for="password"><b>Password:</b> </label>
+                <input id="password" class="form control" type="password" name="password" placeholder="Enter your Password " size="50" required value={{ password }}>
+
+            <br>
+            <br>
+</div>
+
+
+
+    <div class="clearfix">
+
+      <button type="submit" class="signupbtn"> Sign Up </button>
+        <button type="submit" class="cancelbtn" >Cancel</button>
+    </div>
+      <div class="container">
+            {{msg}}
+        </div>
+  </div>
+</form>
+<center><div><h3>Already a user? Click below link</h3><a href="login/">Login</a> </div>
+    </center>
+</center>
+</body>
+</html>
