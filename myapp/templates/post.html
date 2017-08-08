@@ -2,22 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-     <style>
-    body{
-    text-align:center;
-    background-color:greenyellow;
-    background-size: contain;
-    background-position: center;
-    color: black;
-    font-size: 30px;
+    <title>Dashboard</title>
+    <h1> POST HERE</h1>
+
+<style>
+    h1 {
+      text-align: center;
+      color: darkcyan;
+      font-size: 50px;
     }
-    </style>
-</head>
+    h3 {
+        color: firebrick;
+    }
+    body {
+        text-align: center;
+        background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk3faXaBwDXpcIiOcM1IsmB-5PyKWJ53zKzoweIGw6kRvugoa_AQ");
+    }
+  input[type="submit"] {
+        background: black;
+        color: white;
+        border: 10px;
+        font-size: 22px;
+        border-radius: 10%;
+        margin-right:20px;
+    }
+    label {
+        color: brown;
+        font-size: 40px;
+        padding: 20px 10px 20px 10px;
+        margin-bottom: 20px;
+    }
+    input[type="add a picture"] {
+        border: 10px;
+        width: 150px;
+        height: 20px;
+        background: lightblue;
+        padding: 10px 10px 10px 10px;
+        margin-bottom: 10px;
+    }
+    input[type="text"] {
+        border: 0px;
+        width: 150px;
+        height: 10px;
+        background: lightblue;
+        padding: 10px 10px 10px 10px;
+        margin-bottom: 10px;
+    }
+    table {
+             border: solid;
+            border-color: red;
+            padding: 10px 10px 10px 10px;
+    }
+</style>
+
 <body>
-    You are Successfully signed up! Please continue to login!
-    <form action="/login/" method="get">
-        <input type="submit" class="btn btn-default" value="Login">
-    </form>
+     <form method="POST" enctype="multipart/form-data">
+       {% csrf_token %}
+       {{ form }}
+       <input type="submit" class="btn btn-default" value="Add a picture">
+     </form>
+
 </body>
 </html>

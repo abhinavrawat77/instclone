@@ -5,9 +5,11 @@ from models import UserModel, SessionToken, PostModel, LikeModel, CommentModel
 from django.contrib.auth.hashers import make_password, check_password
 from instaclone.settings import BASE_DIR
 from imgurpython import ImgurClient
+from paralleldots.config import get_api_key
 from datetime import timedelta, datetime
 from django.utils import timezone
 import requests
+from tokenize import Comment
 
 
 
@@ -33,7 +35,7 @@ def signup_view(request):
     elif request.method == "GET":
         form = SignUpForm()
         today = datetime.now()
-    return render(request, 'index.html', {'today': today, 'form': form})
+    return render(request, 'index.html', {'form': form})
 
     return render(request, 'index.html', {'form': form})
 
@@ -137,55 +139,65 @@ def insta_clone_comment_text(args):
     pass
 
 def comment_view(request, comment_text=None):
-    #objective for review of positive or  negative  comment
-    #set api_key
-    api_key = "39JDDYmgIv5c1FPr54X0ozcQ6L8nnk29DejqgZ2h7aY"
+    # objective for review of positive or  negative  comment
+    # set api_key
+    api_key = "e1EVvJBc7FR3dja2u4XtrjBAhGZiAE6FRxaGtsPENCs"
     req_json = None
+
     # 1 is for positive comment and 0 is for negative comment
     try:
         req_json = requests.post.json()
         if req_json is not None:
-             sentiment = req_json['sentiment']
-             print req_json
-             print req_json['confidence_score']
-             if req_json['sentence_type'] == "Positive Comment":
-                 #if comment is positive it is greater than 5 percent
+            sentiment = req_json['sentiment']
+            print req_json
+            print req_json['confidence_score']
+            if req_json['sentence_type'] == "Positive Comment":
+
+                # if comment is positive it is greater than 5 percent
                 if req_json['confidence_score'] > 5:
-                    #return positive comment
-                   return 1
+
+                    # return positive comment
+                    return 1
                 else:
-                    #return negative comment
+
+                    # return negative comment
                     return 0
-             else:
-                    return 0
+            else:
+                return 0
     except:
-                    return 0
-#url for the parallel dots of sentiment
+        return 0
+        # url for the parallel dots of sentiment
     url = "http://apis.paralleldots.com/sentiment"
-    #check if user is valid
+
+    # function to check if user is valid
     user = check_validation(request)
-    #check user exists and request post
+
+    # check user exists and request post
     if user and request.method == 'POST':
-       form = CommentForm(request.POST)
-      #check if form is valid
-       if  form.is_valid():
-           #retrieve post id
+        form = CommentForm(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+
+            # retrieve post id
             post_id = form.cleaned_data.get('post').id
-           #accept comment text from the form
+
+            # accept comment text from the form
             comment_text = form.cleaned_data.get('comment_text')
 
             r = requests.get(url, params={"apikey": api_key, "comment": comment_text})
             print r
             comment = CommentModel.objects.create(user=user, post_id=post_id, comment_text=comment_text)
-            #comment save
+
+            # comment save
             comment.save()
-           #redirect to the feed page
+
+            # redirect to the feed page
             return redirect('/feed/')
-       else:
+        else:
             return redirect('/feed/')
     else:
         return redirect('/login/')
-
 
 def check_validation(request):
     if request.COOKIES.get('session_token'):
